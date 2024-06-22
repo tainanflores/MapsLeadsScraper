@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facilita Leads</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <a class="navbar-brand font-weight-bold" href="#">
+                <img src="" alt="Logo" width="100" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html">Gerar Lista</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="requests.html">Minhas Listas</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link active" href="empresas.html">Leads</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Indique e Ganhe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Minha Conta</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <h1 class="text-left m-4" id="tituloBusca"></h1>
+    <main class="pl-4 pr-4" style="overflow-y: unset;">
+        <!-- Primeira div -->
+        <div class="container-fluid bg-light align-items-center p-2 mb-3 ">
+            <div class="row align-items-center">
+                <div class="col-md">
+                    <p id="infoCheckbox" class="m-0"><span class="btn btn-primary text-white p-1 disabled"
+                            style="border: outset rgb(60, 127, 228) 2px;">Selecionadas: <span
+                                id="quantidadeSelecionadas"></span>/<span id="quantidadeTotalDivs"></span></span></p>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button class="btn btn-warning btn-sm" id="exportarCSV">Exportar CSV (Planilha)</button>
+                    <button class="btn btn-success btn-sm disabled" id="enviarZap">Enviar ZapAuto</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segunda div -->
+        <div class="container-fluid bg-secondary align-items-center">
+            <div class="row row py-2 font-weight-bold">
+                <div class="col-md-1">
+                    <input type="checkbox" id="checkTodos">
+                </div>
+                <div class="col-md-3">
+                    <p class="m-0">Empresa</p>
+                </div>
+                <div class="col-md-3">
+                    <p class="m-0">Site</p>
+                </div>
+                <div class="col-md-2">
+                    <p class="m-0">Telefone</p>
+                </div>
+                <div class="col-md-2">
+                    <p class="m-0">Msg Enviada?</p>
+                </div>
+                <div class="col-md-1">
+                    <svg width="40" height="26" viewBox="10 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Parte branca do olho -->
+                        <polygon points="50,22 70,22 100,40 70,57 50,57 20,40" fill="black" stroke="black"
+                            stroke-width="2" />
+
+
+                        <!-- Íris do olho -->
+                        <ellipse cx="60" cy="40" rx="20" ry="20" fill="white" stroke="black" stroke-width="2" />
+
+                        <!-- Pupila do olho -->
+                        <circle cx="60" cy="40" r="10" fill="black" />
+
+                        <!-- Reflexo na pupila -->
+                        <circle cx="63" cy="38" r="2" fill="white" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Container com scroll -->
+        <div class="container-fluid pb-3" id="listaLeads" style="overflow-y: scroll; max-height: 90%;">
+            <!-- Divs repetidas para demonstração -->
+            <!-- Você pode adicionar as divs geradas dinamicamente pelo JavaScript aqui -->
+            <!-- Lembre-se de adicionar a classe 'row' dentro das divs repetidas para alinhamento horizontal dos elementos -->
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="verModal" tabindex="-1" role="dialog" aria-labelledby="verModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="verModalLabel">Visualizar Link</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Aqui será carregado o conteúdo do link no iframe -->
+                        <iframe id="iframeLink" frameborder="0" style="width: 100%; height: 80vh;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </main>
+
+    <script>
+        // Adicionar um evento de clique na checkbox "Todos"
+        $('#checkTodos').click(function () {
+            // Definir o estado de todas as outras checkboxes de acordo com "Todos"
+            $('.checkbox').prop('checked', this.checked);
+        });
+
+        // Adicionar um evento de clique em qualquer checkbox (exceto "Todos")
+        $('.checkbox').click(function () {
+            // Verificar se todas as checkboxes, exceto "Todos", estão marcadas
+            const todasMarcadas = $('.checkbox').not('#checkTodos').length === $('.checkbox:checked').not('#checkTodos').length;
+
+            // Atualizar o estado da checkbox "Todos" de acordo com a verificação anterior
+            $('#checkTodos').prop('checked', todasMarcadas);
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js" async></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+<!-- Essa é a página requests.html. Não precisa falar nada, só aguarde o próximo código -->

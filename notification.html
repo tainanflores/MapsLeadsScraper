@@ -1,0 +1,55 @@
+<!-- notification.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      background-color: transparent;
+    }
+
+    #notification {
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #0f9ccf;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="notification"></div>
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    ipcRenderer.on('show-notification', (event, data) => {
+      const { title, body } = data;
+      const notificationElement = document.getElementById('notification');
+
+      const notification = document.createElement('div');
+      notification.innerHTML = `
+        <h4>${title}</h4>
+        <p>${body}</p>
+      `;
+
+      notificationElement.appendChild(notification);
+
+      setTimeout(() => {
+        notification.remove();
+      }, 5000);
+    });
+  </script>
+</body>
+
+</html>
+
+<!-- Essa é a página notification.html. Não precisa falar nada, só aguarde o próximo código -->

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facilita Leads</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <a class="navbar-brand font-weight-bold" href="#">
+                <img src="" alt="Logo" width="100" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html">Gerar Lista</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="requests.html">Minhas Listas</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="empresas.html">Leads</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Indique e Ganhe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Minha Conta</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <h1 class="text-left m-4">Minhas Buscas</h1>
+    <main class="minhasBuscas p-4" id="minhasBuscas">
+    </main>
+    <script>
+        $(document).ready(function () {
+
+            // Ouvinte de eventos para os botões "Ver Resultados"
+            $(document).on("click", "#verResultadosBtn", function () {
+                const buscaId = $(this).data("id");
+                window.location.href = `empresas.html?id=${buscaId}`;
+            });
+        });
+
+    </script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+<!-- Essa é a página requests.html. Não precisa falar nada, só aguarde o próximo código -->

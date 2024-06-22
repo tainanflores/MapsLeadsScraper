@@ -1,0 +1,23 @@
+{
+  "name": "scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tainan Flores",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^25.3.2"
+  },
+  "dependencies": {
+    "auth0-js": "^9.22.1",
+    "firebase": "^8.6.8",
+    "getmac": "^5.20.0",
+    "puppeteer": "^20.8.0",
+    "sqlite3": "^5.1.6"
+  }
+}
