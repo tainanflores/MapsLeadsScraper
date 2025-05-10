@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 async function runScraper(buscaCompleta) {
   try {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
     await page.goto('https://www.google.com/maps/search/' + buscaCompleta);
@@ -77,7 +77,7 @@ async function runScraper(buscaCompleta) {
           endereco: getText('[data-item-id="address"]'),
           website: getHref('[data-item-id="authority"]'),
           telefone: getText('[data-item-id^="phone"]'),
-          link: location.href 
+          link: location.href
         };
       });
 

@@ -15,9 +15,10 @@
   },
   "dependencies": {
     "auth0-js": "^9.22.1",
+    "dotenv": "^16.5.0",
     "firebase": "^8.6.8",
     "getmac": "^5.20.0",
-    "puppeteer": "^20.8.0",
+    "puppeteer": "^24.8.2",
     "sqlite3": "^5.1.6"
   }
 }

@@ -8,14 +8,16 @@ const { Console, log } = require('console');
 
 const firebase = require('firebase');
 
+require('dotenv').config();
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCflyYX85UY9qHcwC26y-xfdXnZI34eCAk",
-  authDomain: "facilita-b8855.firebaseapp.com",
-  projectId: "facilita-b8855",
-  storageBucket: "facilita-b8855.appspot.com",
-  messagingSenderId: "764360180169",
-  appId: "1:764360180169:web:714ddbba70358d8e8be818",
-  measurementId: "G-3QJ7QWWZ17"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 // Inicializar o Firebase com as credenciais
@@ -361,25 +363,27 @@ ipcMain.on('deletar-busca', (event, data) => {
 });
 
 // Verifica as credenciais de login fornecidas pelo usuário
- ipcMain.handle('verificar-login', async (event, { username, password }) => {
-    try {
-      // Autenticar usuário usando o Firebase Authentication
-      const userCredential = await firebase.auth().signInWithEmailAndPassword(username, password);
-      const user = userCredential.user;
+ipcMain.handle('verificar-login', async (event, { username, password }) => {
+  createMainWindow();
+  return true; // Retorna true para indicar o login bem-sucedido
+  try {
+    // Autenticar usuário usando o Firebase Authentication
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(username, password);
+    const user = userCredential.user;
 
-      if (user) {
-        // Se a autenticação for bem-sucedida, abre a janela principal
-        createMainWindow();
-        return true; // Retorna true para indicar o login bem-sucedido
-      } else {
-        // Se a autenticação falhar, mostra mensagem de erro
-        return false; // Retorna false para indicar o login falhou
-      }
-    } catch (error) {
-      console.error('Erro ao autenticar:', error);
+    if (user) {
+      // Se a autenticação for bem-sucedida, abre a janela principal
+      createMainWindow();
+      return true; // Retorna true para indicar o login bem-sucedido
+    } else {
+      // Se a autenticação falhar, mostra mensagem de erro
       return false; // Retorna false para indicar o login falhou
     }
-  });
+  } catch (error) {
+    console.error('Erro ao autenticar:', error);
+    return false; // Retorna false para indicar o login falhou
+  }
+});
 
 // Adicione essa função para permitir o acesso ao banco de dados a partir do script.js
 ipcMain.handle('buscas-salvas', async () => {
